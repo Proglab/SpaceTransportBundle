@@ -1,0 +1,4 @@
+framework:
+    notifier:
+        chatter_transports:
+            space: '%env(SPACE_DSN)%'

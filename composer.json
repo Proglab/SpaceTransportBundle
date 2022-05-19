@@ -1,0 +1,22 @@
+{
+  "name": "proglab/space-transport-bundle",
+  "description": "A transport for JetBrain Space for the symfony Notifier",
+  "type": "symfony-bundle",
+  "require": {
+    "php": ">=8.0",
+    "symfony/framework-bundle": "^5.4",
+    "symfony/notifier": "^5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Proglab\\SpaceTransportBundle\\": "src/"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fabrice Gyre",
+      "email": "info@proglab.com"
+    }
+  ]
+}

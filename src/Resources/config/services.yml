@@ -1,0 +1,22 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+
+
+    proglab.space_transport.space_transport_factory:
+        class: Proglab\SpaceTransportBundle\SpaceTransport\SpaceTransportFactory
+        parent: notifier.transport_factory.abstract
+        tags: [ 'texter.transport_factory' ]
+        public: true
+
+    proglab.space_transport.space_handler:
+        class: Proglab\SpaceTransportBundle\SpaceTransport\SpaceHandler
+        arguments: [ '@proglab.space_transport.space_transport_factory' ]
+        public: true
