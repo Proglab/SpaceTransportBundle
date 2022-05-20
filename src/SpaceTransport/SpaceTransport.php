@@ -26,15 +26,20 @@ final class SpaceTransport extends AbstractTransport
             throw new UnsupportedMessageTypeException(__CLASS__, ChatMessage::class, $message);
         }
 
-        $channel = $message->getNotification()->getChannel();
+        $channel = $message->getNotification()->getChannel() ?? $this->channel;
 
-        $result = $this->client->request('POST', urldecode($this->host), [
+        $channel = $this->client->request('GET', urldecode($this->host).'/api/http/chats/channels/all-channels?query='.$channel, [
+            'auth_bearer' => $this->bearer,
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        $channelID = $channel->toArray()['data'][0]['channelId'];
+
+        $result = $this->client->request('POST', urldecode($this->host).'/api/http/chats/channels/'.$channelID.'/messages', [
             'body' => json_encode([
-                'content' => [
-                    'className' => 'ChatMessage.Text',
-                    'text' => $message->getSubject()
-                ],
-                'channel' => 'channel:name:' . $channel ?? $this->channel,
+                'text' => $message->getSubject()
             ], JSON_THROW_ON_ERROR),
             'auth_bearer' => $this->bearer,
             'headers' => [

@@ -11,6 +11,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SpaceTransportFactory extends AbstractTransportFactory
 {
+    public function __construct(EventDispatcherInterface $dispatcher = null, HttpClientInterface $client = null)
+    {
+        parent::__construct($dispatcher, $client);
+    }
+
     protected function getSupportedSchemes(): array
     {
         return ['space'];

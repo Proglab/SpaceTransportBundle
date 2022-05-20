@@ -28,7 +28,7 @@ And finally you must add this to your .env file :
 
 ```dotenv
 ###> proglab/space-transport-bundle ###
-SPACE_DSN=space://{{token}}@default?channel={{default_channel}}
+SPACE_DSN=space://{{token}}@{{host_url_space}}?channel={{default_channel}}
 ###< proglab/space-transport-bundle ###
 ```
 
@@ -45,4 +45,3 @@ $notification = new SpaceNotification('Welcome Aboard', ['chat/space']);
 $notification->setChannel('Xxx'); // you can override the default channel if necessary
 $notifier->send($notification);
 ```
-
