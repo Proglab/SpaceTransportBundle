@@ -11,7 +11,6 @@ class SpaceHandler extends AbstractProcessingHandler
 {
     public function __construct(protected SpaceTransportFactory $spaceFactory, $level = Logger::CRITICAL, bool $bubble = true)
     {
-        $this->level = $level;
         parent::__construct($level, $bubble);
     }
 

@@ -6,6 +6,8 @@ use Symfony\Component\Notifier\Exception\UnsupportedSchemeException;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Component\Notifier\Transport\TransportInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SpaceTransportFactory extends AbstractTransportFactory
 {
@@ -24,7 +26,7 @@ class SpaceTransportFactory extends AbstractTransportFactory
 
         $bearer = $this->getUser($dsn);
         $channel =  $dsn->getOption('channel');
-
-        return new SpaceTransport($bearer, $channel);
+        $host = $dsn->getHost();
+        return (new SpaceTransport($bearer, $channel, $this->client, $this->dispatcher))->setHost($host);
     }
 }

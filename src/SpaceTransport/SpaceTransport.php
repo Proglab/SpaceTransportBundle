@@ -13,12 +13,10 @@ use Symfony\Component\Notifier\Exception\UnsupportedMessageTypeException;
 final class SpaceTransport extends AbstractTransport
 {
     private const TRANSPORT = 'space';
-    private string $transport;
 
-    public function __construct(protected string $bearer, protected string $channel, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null, ?ParameterBagInterface $parameterBag = null)
+    public function __construct(protected string $bearer, protected string $channel, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null)
     {
         parent::__construct($client, $dispatcher);
-        $this->transport = $parameterBag->get('space_transport.url');
 
     }
 
@@ -30,17 +28,19 @@ final class SpaceTransport extends AbstractTransport
 
         $channel = $message->getNotification()->getChannel();
 
-        $result = $this->client->request('POST', $this->transport, [
+        $result = $this->client->request('POST', urldecode($this->host), [
             'body' => json_encode([
                 'content' => [
                     'className' => 'ChatMessage.Text',
                     'text' => $message->getSubject()
                 ],
-                'channel' => 'channel:name:'.$channel ?? $this->channel,
-            ]),
-            'auth_bearer' => $this->bearer
+                'channel' => 'channel:name:' . $channel ?? $this->channel,
+            ], JSON_THROW_ON_ERROR),
+            'auth_bearer' => $this->bearer,
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
         ]);
-
         $httpInfo = $result->getInfo();
         $sentMessage = new SentMessage($message, (string) $this);
         $sentMessage->setMessageId((int) $httpInfo['start_time']);

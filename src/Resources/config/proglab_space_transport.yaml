@@ -3,5 +3,5 @@ framework:
         chatter_transports:
             space: '%env(SPACE_DSN)%'
 
-space_transport:
+proglab_space_transport:
     url: 'https://digitallab.jetbrains.space/api/http/chats/messages/send-message'
