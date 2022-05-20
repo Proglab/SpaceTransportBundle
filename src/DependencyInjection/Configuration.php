@@ -12,7 +12,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('space_transport');
+        $treeBuilder = new TreeBuilder('proglab_space_transport');
         $treeBuilder->getRootNode()
             ->children()
             ->scalarNode('url')->end()

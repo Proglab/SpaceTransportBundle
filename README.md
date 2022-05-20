@@ -22,7 +22,7 @@ return [
 ];
 ```
 
-Copy ```src/Resources/config/space-transport.yaml``` to your ```config/packages/space-transport.yaml``` and update the space url
+Copy ```src/Resources/config/proglab_space_transport.yaml``` to your ```config/packages/proglab_space_transport.yaml``` and update the space url
 
 And finally you must add this to your .env file :
 
@@ -38,11 +38,11 @@ Usage
 The default space Channel is defined in your .env file.
 
 ```php
-use Proglab\SftpClientBundle\Service\SftpClient;
+use Proglab\SpaceClientBundle\SpaceTransport\SpaceNotification;
 
 
 $notification = new SpaceNotification('Welcome Aboard', ['chat/space']);
-$notification->setChannel('Pimcore'); // you can override the default channel if necessary
+$notification->setChannel('Xxx'); // you can override the default channel if necessary
 $notifier->send($notification);
 ```
 
