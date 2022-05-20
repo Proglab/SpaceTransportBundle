@@ -13,11 +13,13 @@ use Symfony\Component\Notifier\Exception\UnsupportedMessageTypeException;
 final class SpaceTransport extends AbstractTransport
 {
     private const TRANSPORT = 'space';
-    private const TRANSPORT_URL = 'https://digitallab.jetbrains.space/api/http/chats/messages/send-message';
+    private string $transport;
 
-    public function __construct(protected string $bearer, protected string $channel, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null)
+    public function __construct(protected string $bearer, protected string $channel, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null, ?ParameterBagInterface $parameterBag = null)
     {
         parent::__construct($client, $dispatcher);
+        $this->transport = $parameterBag->get('space_transport.url');
+
     }
 
     protected function doSend(MessageInterface $message): SentMessage
@@ -28,7 +30,7 @@ final class SpaceTransport extends AbstractTransport
 
         $channel = $message->getNotification()->getChannel();
 
-        $result = $this->client->request('POST', self::TRANSPORT_URL, [
+        $result = $this->client->request('POST', $this->transport, [
             'body' => json_encode([
                 'content' => [
                     'className' => 'ChatMessage.Text',

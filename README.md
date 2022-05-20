@@ -22,14 +22,14 @@ return [
 ];
 ```
 
-Copy ```src/Resources/config/proglab/space-transport.yaml``` to your ```config/packages/space-transport.yaml```
+Copy ```src/Resources/config/space-transport.yaml``` to your ```config/packages/space-transport.yaml``` and update the space url
 
 And finally you must add this to your .env file :
 
-```
-###> proglab/selligent-client-bundle ###
+```dotenv
+###> proglab/space-transport-bundle ###
 SPACE_DSN=space://{{token}}@default?channel={{default_channel}}
-###< proglab/selligent-client-bundle ###
+###< proglab/space-transport-bundle ###
 ```
 
 Usage
