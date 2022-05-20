@@ -12,10 +12,11 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('proglab_space_transport');
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $treeBuilder = new TreeBuilder('space_transport');
+        $treeBuilder->getRootNode()
+            ->children()
+            ->scalarNode('url')->end()
+            ->end();
 
         return $treeBuilder;
     }
