@@ -4,4 +4,4 @@ framework:
             space: '%env(SPACE_DSN)%'
 
 proglab_space_transport:
-    url: 'https://digitallab.jetbrains.space/api/http/chats/messages/send-message'
+    url: 'https://digitallab.jetbrains.space'
