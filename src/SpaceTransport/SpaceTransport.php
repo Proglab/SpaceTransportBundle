@@ -14,7 +14,12 @@ final class SpaceTransport extends AbstractTransport
 {
     private const TRANSPORT = 'space';
 
-    public function __construct(protected string $bearer, protected string $channel, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null)
+    public function __construct(
+        protected string $bearer,
+        protected string $channel,
+        HttpClientInterface $client = null,
+        EventDispatcherInterface $dispatcher = null
+    )
     {
         parent::__construct($client, $dispatcher);
 
@@ -25,8 +30,12 @@ final class SpaceTransport extends AbstractTransport
         if (!$message instanceof ChatMessage) {
             throw new UnsupportedMessageTypeException(__CLASS__, ChatMessage::class, $message);
         }
-
-        $channel = $message->getNotification()->getChannel() ?? $this->channel;
+        
+        if ($message->getNotification() === null) {
+            $channel = $this->channel;
+        } else {
+            $channel = $message->getNotification()->getChannel() ?? $this->channel;
+        }
 
         $channel = $this->client->request('GET', urldecode($this->host).'/api/http/chats/channels/all-channels?query='.$channel, [
             'auth_bearer' => $this->bearer,
